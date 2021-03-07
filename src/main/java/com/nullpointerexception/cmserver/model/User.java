@@ -1,6 +1,6 @@
 package com.nullpointerexception.cmserver.model;
 
-import javax.persistence.Column;
+import javax.persistence.Column; 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,6 +38,7 @@ public class User {
 		 this.password = password;
 		 this.newsletterStatus = ((newsletterStatus.equals("true")) ? true : false);
 	 }
+	 public User() {}
 	 
 	public int getId() {
 		return id;
