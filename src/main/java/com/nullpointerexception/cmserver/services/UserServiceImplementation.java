@@ -33,8 +33,10 @@ public class UserServiceImplementation implements UserService{
 	}
 
 	@Override
-	public void addUser(User user) {
+	public void addUser(User user){
 		userRepository.save(user);
+
+
 		
 	}
 
