@@ -27,26 +27,28 @@ public class JWTManager {
         }
     }
 	
-	public void verifyAToken(String token){
+	public boolean verifyAToken(String token){
         try {
             JWTVerifier verifier = JWT.require(algorithmHS)
                     .withIssuer("CollabMode")
-                    .build(); //Reusable verifier instance
+                    .build();
             DecodedJWT jwt = verifier.verify(token);
-            System.out.println("The token has been verified!");
+            return true;
         } catch (JWTVerificationException e){
             e.getMessage();
+            return false;
         }
     }
 	
-	public void decodeAToken(String token){
+	public String decodeAToken(String token){
         try {
             DecodedJWT jwt = JWT.decode(token);
             Map<String, Claim> claims = jwt.getClaims();
             Claim claim = claims.get("email");
-            System.out.println(claim.asString()); //debug
+            return claim.asString();
         } catch (JWTDecodeException e){
            e.getMessage();
+           return null;
         }
     }
 }
