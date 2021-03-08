@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
+	implementation group: 'javax.ejb', name: 'javax.ejb-api', version: '3.2'
 	implementation 'com.auth0:java-jwt:3.14.0'
 	implementation group: 'org.json', name: 'json', version: '20201115'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
