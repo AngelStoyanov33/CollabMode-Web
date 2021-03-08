@@ -26,9 +26,16 @@ public class RegisterController {
 				, payload.get("email").toString()
 				, payload.get("password").toString()
 				, payload.get("newsletterStatus").toString());
-		userService.addUser(user);
-		json.put("status", "ok");
-		json.put("token", jwtManager.createToken(payload.get("email").toString()));
+				
+		if(userService.getUserByEmail(user.getEmail()) != null) {
+			json.put("status", "error");
+			json.put("token", "");
+			json.put("errorMessage", "User with that email already exists!");
+		}else {
+			userService.addUser(user);
+			json.put("status", "ok");
+			json.put("token", jwtManager.createToken(payload.get("email").toString()));
+		}
 		
 		return json.toString();
 		
