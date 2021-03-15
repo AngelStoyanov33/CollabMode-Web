@@ -15,6 +15,7 @@ import com.nullpointerexception.cmserver.services.JWTManager;
 import com.nullpointerexception.cmserver.services.StringRandomizer;
 import com.nullpointerexception.cmserver.services.TeamService;
 import com.nullpointerexception.cmserver.services.UserService;
+import com.nullpointerexception.cmserver.services.XMLManager;
 
 @RestController
 public class CreateTeamController {
@@ -25,9 +26,10 @@ public class CreateTeamController {
 	UserService userService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/createTeam", produces = {"application/json"})
-	public String register(@RequestBody Map<String, Object> payload) {
+	public String createATeam(@RequestBody Map<String, Object> payload) {
 		JSONObject json = new JSONObject();
 		JWTManager jwtManager = new JWTManager();
+		XMLManager xmlManager = new XMLManager();
 		if(jwtManager.verifyAToken(payload.get("token").toString())) {
 			if(teamService.getTeamByName(payload.get("teamName").toString()) == null) {
 				User user = userService.getUserByEmail(jwtManager.decodeAToken(payload.get("token").toString()));
@@ -37,6 +39,14 @@ public class CreateTeamController {
 					user.setTeamID(team.getId());
 					user.setOwner(true);
 					userService.addUser(user);
+					try {
+						xmlManager.addGroup(payload.get("teamName").toString());
+						xmlManager.addUser(payload.get("teamName").toString(), payload.get("teamName").toString(), "", "");
+						xmlManager.reloadConfiguration();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
 					json.put("status", "ok");
 				}
 			}else {
