@@ -1,6 +1,6 @@
 package com.nullpointerexception.cmserver.controller;
 
-import java.util.Map;
+import java.util.Map; 
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.nullpointerexception.cmserver.model.Team;
 import com.nullpointerexception.cmserver.model.User;
 import com.nullpointerexception.cmserver.services.JWTManager;
-import com.nullpointerexception.cmserver.services.StringRandomizer;
 import com.nullpointerexception.cmserver.services.TeamService;
 import com.nullpointerexception.cmserver.services.UserService;
 
@@ -26,7 +25,7 @@ public class GetTeamCodeController {
 	UserService userService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/sendInvite", produces = {"application/json"})
-	public String register(@RequestBody Map<String, Object> payload) {
+	public String getTeamCode(@RequestBody Map<String, Object> payload) {
 		JSONObject json = new JSONObject();
 		JWTManager jwtManager = new JWTManager();
 		
