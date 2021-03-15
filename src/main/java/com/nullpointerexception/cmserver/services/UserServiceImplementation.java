@@ -48,4 +48,9 @@ public class UserServiceImplementation implements UserService{
 		return (int) userRepository.count();
 	}
 
+	@Override
+	public List<User> getUsersByTeamID(int teamID) {
+		return (List<User>) userRepository.findByTeamID(teamID);
+	}
+
 }
