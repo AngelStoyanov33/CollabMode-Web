@@ -32,6 +32,8 @@ public class GetUserController {
 					json.put("userID", user.getId());
 					json.put("userFullName", user.getFullName());
 					json.put("userEmail", user.getEmail());
+					json.put("userTeamID", user.getTeamID());
+					json.put("userIsTeamOwner", user.isOwner());
 				}else {
 					json.put("status", "error");
 					json.put("errorMessage", "Could not fetch user details");
