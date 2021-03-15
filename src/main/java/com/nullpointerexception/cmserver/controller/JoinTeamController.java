@@ -24,7 +24,7 @@ public class JoinTeamController {
 	UserService userService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/joinTeam", produces = {"application/json"})
-	public String register(@RequestBody Map<String, Object> payload) {
+	public String joinATeam(@RequestBody Map<String, Object> payload) {
 		JSONObject json = new JSONObject();
 		JWTManager jwtManager = new JWTManager();
 		if(jwtManager.verifyAToken(payload.get("token").toString())) {

@@ -19,5 +19,5 @@ public interface TeamService {
 	 public void deleteTeamById(int id);
 	 
 	 public int getTeamsCount();
-
+	 
 }
