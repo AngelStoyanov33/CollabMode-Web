@@ -1,10 +1,13 @@
 package com.nullpointerexception.cmserver.model;
 
+import javax.persistence.CascadeType; 
 import javax.persistence.Column; 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,7 +23,7 @@ public class User {
 	 private String fullName;
 	
 
-	@Column(name="email", nullable=false)
+	 @Column(name="email", nullable=false)
 	 private String email;
 	 
 	 @Column(name="password", nullable=false)
@@ -29,8 +32,14 @@ public class User {
 	 @Column(name="newsletterStatus", nullable=false)
 	 private boolean newsletterStatus;
 	 
-	 //TODO: Column: is_owner_of_team bool, default 0
-	 //TODO: Column: team_id int, primary key
+//	 @OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL)
+//	 @JoinColumn(name = "teamId", referencedColumnName = "id", nullable = true)
+	 @Column(name="teamId", nullable=true)
+	 private int teamID;
+	 
+	 @Column(name="isOwner", nullable=true)
+	 private boolean isOwner = false; //default value
+	 
 	 
 	 public User(String fullName, String email, String password, String newsletterStatus) {
 		 this.fullName = fullName;
@@ -79,5 +88,22 @@ public class User {
 	public void setNewsletterStatus(boolean newsletterStatus) {
 		this.newsletterStatus = newsletterStatus;
 	}
+	
+	public int getTeamID() {
+		return teamID;
+	}
+	
+	public void setTeamID(int teamID) {
+		this.teamID = teamID;
+	}
+	
+	public boolean isOwner() {
+		return isOwner;
+	}
+	
+	public void setOwner(boolean isOwner) {
+		this.isOwner = isOwner;
+	}
+	
 	
 }

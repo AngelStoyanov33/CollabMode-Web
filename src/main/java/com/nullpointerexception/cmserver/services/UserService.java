@@ -16,6 +16,5 @@ public interface UserService {
 	 public void deleteUserById(int id);
 	 
 	 public int getUsersCount();
-	 
-	 //TODO: Get user by token
+
 }
