@@ -1,5 +1,8 @@
 package com.nullpointerexception.cmserver.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -46,6 +49,37 @@ public class CreateTeamController {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					
+					try {
+						Process p = Runtime.getRuntime().exec(new String[]{"C:\\Program Files\\mosquitto\\mosquitto_passwd.exe", "-b passwds.txt " + team.getName() + " "+ team.getCode().toString()});
+						System.out.println("C:\\Program Files\\mosquitto\\mosquitto_passwd.exe"+" -b passwds.txt " + team.getName() + " " + team.getCode().toString());
+						System.out.println(p.waitFor());
+						
+					
+						
+						BufferedReader stdInput = new BufferedReader(new 
+							     InputStreamReader(p.getInputStream()));
+
+							BufferedReader stdError = new BufferedReader(new 
+							     InputStreamReader(p.getErrorStream()));
+
+							// Read the output from the command
+							System.out.println("Here is the standard output of the command:\n");
+							String s = null;
+							while ((s = stdInput.readLine()) != null) {
+							    System.out.println(s);
+							}
+
+							// Read any errors from the attempted command
+							System.out.println("Here is the standard error of the command (if any):\n");
+							while ((s = stdError.readLine()) != null) {
+							    System.out.println(s);
+							}
+					} catch (IOException | InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 					
 					json.put("status", "ok");
 				}

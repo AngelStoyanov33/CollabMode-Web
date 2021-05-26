@@ -1,5 +1,6 @@
 package com.nullpointerexception.cmserver.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -35,8 +36,16 @@ public class LeaveTeamController {
 				userService.addUser(user);
 				json.put("status", "ok");
 			}else {
-				json.put("status", "error");
-				json.put("errorMessage", "You must kick all members from your team or transfer the ownership before leaving");
+				List<User> users = userService.getUsersByTeamID(user.getTeamID());
+				if(users.size() == 1) {
+					user.setTeamID(0);
+					userService.addUser(user);
+					json.put("status", "ok");
+				}else {
+					json.put("status", "error");
+					json.put("errorMessage", "You must kick all members from your team or transfer the ownership before leaving");
+				
+				}
 			}
 		}else {
 			json.put("status", "error");
