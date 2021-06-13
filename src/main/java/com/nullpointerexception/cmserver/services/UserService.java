@@ -11,6 +11,8 @@ public interface UserService {
 	 
 	 public User getUserByEmail(String email);
 	 
+	 public User getUserByFullName(String fullname);
+	 
 	 public List<User> getUsersByTeamID(int teamID);
 	 
 	 public void addUser(User user);

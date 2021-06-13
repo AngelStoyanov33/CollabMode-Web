@@ -53,4 +53,9 @@ public class UserServiceImplementation implements UserService{
 		return (List<User>) userRepository.findByTeamID(teamID);
 	}
 
+	@Override
+	public User getUserByFullName(String fullName) {
+		return userRepository.findByFullName(fullName);
+	}
+
 }

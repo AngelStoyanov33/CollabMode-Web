@@ -43,7 +43,7 @@ public class GetUsersFromTeamController {
 				json.put("status", "ok");
 				json.put("users", userArray);
 				
-				System.out.println(json.getJSONArray("users").get(0));
+				//System.out.println(json.getJSONArray("users").get(0));
 				
 			}else {
 				json.put("status", "error");
