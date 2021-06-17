@@ -59,10 +59,9 @@ function onConnected() {
 		}
 
 		xhr.setRequestHeader('Content-Type', 'application/json');
-		xhr.setRequestHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-		xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true');
 		xhr.send(JSON.stringify({
-		    topic: globalTopic
+		    topic: globalTopic,
+		    user: globalUsername
 		}));
 }
 

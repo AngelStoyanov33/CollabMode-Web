@@ -35,27 +35,31 @@ public class FetchMessages {
 		JSONObject json = new JSONObject();
 		List<Messages> messages = messagesService.getMessagesByTopic(payload.get("topic").toString());
 		JSONArray messagesArray = new JSONArray(new Gson().toJson(messages));
+		User mainUser = userService.getUserByFullName(payload.get("user").toString());
+		
+		JSONArray messagesArrayFiltered = new JSONArray();
+		
 		for(int i = 0; i < messagesArray.length(); i++) {
 			JSONObject t = messagesArray.getJSONObject(i);
+			User user = userService.getUserById((int) t.get("senderId"));
+			if(user.getTeamID() == mainUser.getTeamID()) {
+				messagesArrayFiltered.put(t);
+			}
+		}
+		
+		for(int i = 0; i < messagesArrayFiltered.length(); i++) {
+			JSONObject t = messagesArrayFiltered.getJSONObject(i);
 			t.remove("id");
 			int senderId = (int) t.get("senderId");
 			t.remove("senderId");
 			User user = userService.getUserById(senderId);
 			t.put("sender", user.getFullName());
-			
 		}
 		json.put("status", "ok");
-		json.put("messages", messagesArray.toString());
+		json.put("messages", messagesArrayFiltered.toString());
 		
-		return messagesArray.toString();	
+		return messagesArrayFiltered.toString();	
 	
-//		else {
-//			json.put("status", "error");
-//			json.put("errorMessage", "Unauthorized request");
-//		}
-		//json.put("status", "ok");
-		
-		//return json.toString();
 	}
 
 }
