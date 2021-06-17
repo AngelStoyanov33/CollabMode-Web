@@ -11,16 +11,14 @@ var connectingElement = document.querySelector('.connecting');
 var stompClient = null;
 var username = null;
 
-
-var globalTopic = "/topic/public";
-
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
 function connect(event) {
-    username = document.querySelector('#name').value.trim();
+	
+	username = globalUsername;
 
     if(username) {
         usernamePage.classList.add('hidden');
@@ -37,7 +35,7 @@ function connect(event) {
 
 function onConnected() {
     // Subscribe to the Public Topic
-    stompClient.subscribe('/topic/public', onMessageReceived);
+    stompClient.subscribe(globalTopic, onMessageReceived);
 
     // Tell your username to the server
     stompClient.send("/app/chat.addUser",
@@ -46,11 +44,9 @@ function onConnected() {
     )
 
     connectingElement.classList.add('hidden');
-    // var testJson = {"type":"CHAT","content":"fef","sender":"kure"};
-    // onMessageReceived(testJson);
 
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://192.168.0.107:8080/fetchMessages", true);
+		xhr.open("POST", "http://192.168.0.100:8080/fetchMessages", true);
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == XMLHttpRequest.DONE) {
 				var response = JSON.parse(xhr.responseText);
@@ -58,7 +54,6 @@ function onConnected() {
 				console.log(response[0].content);
 				response.forEach((item) => {
 					createNewMessage(item.sender, item.content);
-				  //console.log('Content: ' + item.content);
 				});
 			}
 		}
@@ -134,15 +129,8 @@ function onMessageReceived(payload) {
     } else {
         messageElement.classList.add('chat-message');
 
-        //save to database with other messages
-        // content -> message.content
-        // sender -> message.sender
-        // timestamp -> current/timestamp created
-        // topic -> default
-
-
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://192.168.0.107:8080/saveMessage", true);
+		xhr.open("POST", "http://192.168.0.100:8080/saveMessage", true);
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.send(JSON.stringify({
 		    content: message.content,
